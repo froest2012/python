@@ -25,6 +25,12 @@ def zeroOnePack0(cost,weight,v):
 				f[i][j] = f[i-1][j]
 	print(f[14][4999])
 
+def zeroOnePack(cost,weight,v,b,f):
+	'''单个物品的处理'''
+	for j in range(b,v)[::-1]:
+		if j > cost:
+			f[j] = max(f[j],f[j-cost] + weight)
+
 def zeroOnePack1(cost,weight,v):
 	'''
 	经过内存优化以后的01背包问题，时间O(NV),空间f[V]
@@ -34,10 +40,9 @@ def zeroOnePack1(cost,weight,v):
 	f = [0 for i in range(v)]
 	for i in range(n):
 		b = max(v - sum(cost[i:n]),cost[i])
-		for j in range(b,v)[::-1]:
-			if j > cost[i]:
-				f[j] = max(f[j],f[j-cost[i]] + weight[i])
+		zeroOnePack(cost[i],weight[i],v,b,f)
 	print(f[4999])
+
 #01背包问题=============================================================
 if __name__ == '__main__':
 	zeroOnePack1(arr,arr,v)
