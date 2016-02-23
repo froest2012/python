@@ -4,8 +4,8 @@ import os
 import os.path
 import pdb
 
-fdir = '/Users/xiuc/logs/search_neiwang'
-fout = open('/Users/xiuc/logs/earchResult', 'a')
+fdir = '/Users/xiuc/logs/201602'
+fout = open('/Users/xiuc/logs/201602/crmandorder.log', 'a')
 for i in os.listdir(fdir):
     if os.path.isfile(os.path.join(fdir, i)):
         fin = open(os.path.join(fdir, i), 'r')
@@ -13,8 +13,7 @@ for i in os.listdir(fdir):
         while not done:
             line = fin.readline()
             if line != '':
-                if line.find('/goods/lid') >= 0:
-                    fout.write(line)
+            	fout.write(line)
             else:
                 done = 1
         fin.close()
