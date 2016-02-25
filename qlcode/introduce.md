@@ -8,3 +8,5 @@ solve the question in qlcode
 	the questiong of 75f3 which is about 01 pack.
 #### pylib.py
 	personal python code
+### qlcode_7617.py
+	隐写术处理后的图片，找出隐写单词
