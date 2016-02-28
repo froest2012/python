@@ -10,3 +10,5 @@ learning python
 	the python lib downloaded
 ### docsets         
 	the code to make Dash doc and the data which will inserted into the database of sqlite
+### poj
+	the code to solve poj question with python
