@@ -1,6 +1,6 @@
 #! /usr/bin/env python
-#http://www.practice.geeksforgeeks.org/problem-page.php?pid=302
-#n的m次方得到一个数，求第k个数字是多少
+# http://www.practice.geeksforgeeks.org/problem-page.php?pid=302
+# n的m次方得到一个数，求第k个数字是多少
 
 num = input()
 while num > 0:
