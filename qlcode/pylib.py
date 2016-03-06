@@ -4,13 +4,13 @@
 import pdb
 
 # 01背包问题============================================================
-# arr = [509, 838, 924, 650, 604, 793, 564, 651, 697, 649, 747, 787, 701, 605, 644]
-# v = 5000
+cost = [509, 838, 924, 650, 604, 793, 564, 651, 697, 649, 747, 787, 701, 605, 644]
+v = 5000
 
 
-cost = [1, 2, 3, 2]
-weight = [4, 6, 12, 7]
-v = 6
+#cost = [1, 2, 3, 2]
+#weight = [4, 6, 12, 7]
+#v = 6
 
 
 def zeroOnePack0(cost, weight, v):
@@ -32,17 +32,21 @@ def pack01(cost, weight, v, b, f):
 		f[j] = max(f[j], f[j - cost] + weight)
 
 
-def pack01(cost, weight, v):
+def pack01(cost, weight, v, sum):
 	"""经过内存优化以后的01背包问题，时间O(NV),空间f[V]cost[i]不会影响到0~cost[i]-1,所以下界可以优化成max(v - sum(cost[i:n]),cost[i])"""
 	n = len(cost)
 	f = [0 for i in range(v + 1)]
 	for i in range(n):
-		b = max(v - sum(cost[i:n]), cost[i])
+		b = max(v - sum, cost[i])
 		for j in range(b, v + 1)[::-1]:
 			f[j] = max(f[j], f[j - cost[i]] + weight[i])
+		sum -= cost[i]
 	print(f[v])
 
 
 # 01背包问题=============================================================
 if __name__ == '__main__':
-	pack01(cost, weight, v)
+	sum = 0
+	for i in range(len(cost)):
+		sum += cost[i]
+	pack01(cost, cost, v, sum)
