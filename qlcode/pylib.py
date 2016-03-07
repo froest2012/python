@@ -25,6 +25,7 @@ def zeroOnePack0(cost, weight, v):
 				f[i][j] = f[i - 1][j]
 	print(f[3][5])
 
+
 # 01背包
 # cost  花费
 # weight    价值
