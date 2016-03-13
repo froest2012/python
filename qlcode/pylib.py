@@ -26,16 +26,6 @@ def zeroOnePack0(cost, weight, v):
 	print(f[3][5])
 
 
-def printPath(f, cost, weight, i, j, p):
-	if i < 0 or j - cost[i] < 0:
-		return
-	if f[j] == f[j - cost[i]] + weight[i]:
-		p.append(i)
-		printPath(f, cost, weight, i, j - cost[i], p)
-	else:
-		printPath(f, cost, weight, i - 1, j, p)
-
-
 # 01背包
 # cost  花费
 # weight    价值
@@ -50,9 +40,6 @@ def pack01(cost, weight, v, sum):
 		for j in range(b, v + 1)[::-1]:
 			f[j] = max(f[j], f[j - cost[i]] + weight[i])
 		sum -= cost[i]
-	p = []
-	printPath(f, cost, weight, n - 1, v, p)
-	print(p)
 	print(f[v])
 
 
