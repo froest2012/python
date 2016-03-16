@@ -1,9 +1,9 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# 超级丑，全世界没有之一
-# 动态规划解01背包问题，计算路径，最大收益
-import pdb
+"""
+ 动态规划解01背包问题，计算路径，最大收益
+"""
 
 v = 5000
 n = 15
@@ -33,6 +33,6 @@ def prin(f, cost, weight, i, j, l):
 
 
 zero012(f, arr, arr, v)
-l = []
-prin(f, arr, arr, n, v, l)
-print(l)
+chooseSet = []
+prin(f, arr, arr, n, v, chooseSet)
+print(chooseSet)
