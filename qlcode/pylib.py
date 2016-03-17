@@ -31,7 +31,7 @@ def pack012(f, cost, weight, v):
 def prin(f, cost, weight, i, j, l):
 	if i <= 0:
 		return
-	if f[i][j] == f[i - 1][j - cost[i]] + weight[i]:
+	if j >= cost[i] and f[i][j] == f[i - 1][j - cost[i]] + weight[i]:
 		l.append(i)
 		prin(f, cost, weight, i - 1, j - cost[i], l)
 	else:
