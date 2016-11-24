@@ -13,23 +13,26 @@ def analyzeHttpLog(logPaths):
 	timeout = []
 	resToBig = []
 	for path in logPaths:
-		file = open(path, 'r')
-		done = 0
-		while not done:
-			line = file.readline()
-			if line == '':
-				done = 1
-				break
-			item = analyzeLine(line)
-			if item :
-				if item.iname in countDic.keys() :
-					countDic[item.iname] += 1
-				else:
-					countDic[item.iname] = 0
-				if int(item.time) > timeThreshold and not item.iname in timeout:
-					timeout.append(item.iname)
-				if int(item.res) > resThreshold and not item.iname in resToBig:
-					resToBig.append(item.iname)
+		try:
+			file = open(path, 'r')
+			done = 0
+			while not done:
+				line = file.readline()
+				if line == '':
+					done = 1
+					break
+				item = analyzeLine(line)
+				if item :
+					if item.iname in countDic.keys() :
+						countDic[item.iname] += 1
+					else:
+						countDic[item.iname] = 0
+					if int(item.time) > timeThreshold and not item.iname in timeout:
+						timeout.append(item.iname)
+					if int(item.res) > resThreshold and not item.iname in resToBig:
+						resToBig.append(item.iname)
+		finally:
+			file.close()
 	printCallMost(countDic)
 	printTimeOut(timeout)
 	printResToBig(resToBig)
