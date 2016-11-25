@@ -1,38 +1,54 @@
-#! /usr/bin/env python3
+#! /usr/bin/env python2
 # -*- coding:utf-8 -*-
 
 import hashlib
 import re
+import traceback
+import os
+import os.path
 
-timeThreshold = 1000
-resThreshold = 1048576
+"""
+对日志从请求响应时间,响应结果大小,请求次数进行分析
+"""
+
+# 请求响应时间阈值
+timeThreshold = 500
+# 请求响应结果阈值
+resThreshold = 102400
+# 请求次数阈值
+callThreshold = 500
 
 
-def analyzeHttpLog(logPaths):
+def analyzeHttpLog(logDirs):
 	countDic = {}
 	timeout = []
 	resToBig = []
-	for path in logPaths:
-		try:
-			file = open(path, 'r')
-			done = 0
-			while not done:
-				line = file.readline()
-				if line == '':
-					done = 1
-					break
-				item = analyzeLine(line)
-				if item :
-					if item.iname in countDic.keys() :
-						countDic[item.iname] += 1
-					else:
-						countDic[item.iname] = 0
-					if int(item.time) > timeThreshold and not item.iname in timeout:
-						timeout.append(item.iname)
-					if int(item.res) > resThreshold and not item.iname in resToBig:
-						resToBig.append(item.iname)
-		finally:
-			file.close()
+	line = ''
+	for dir in logDirs:
+		for fileName in os.listdir(dir):
+			if os.path.isfile(os.path.join(dir, fileName)):
+				print(os.path.join(dir, fileName))
+				try:
+					fileIn = open(os.path.join(dir, fileName), 'r')
+					while True:
+						line = fileIn.readline()
+						if line == '':
+							break
+						item = analyzeLine(line)
+						if item:
+							if item.iname in countDic.keys():
+								countDic[item.iname] += 1
+							else:
+								countDic[item.iname] = 0
+							if int(item.time) > timeThreshold and not item.iname in timeout:
+								timeout.append(item.iname)
+							if int(item.res) > resThreshold and not item.iname in resToBig:
+								resToBig.append(item.iname)
+				except:
+					print(line)
+					traceback.print_exc()
+				finally:
+					fileIn.close()
 	printCallMost(countDic)
 	printTimeOut(timeout)
 	printResToBig(resToBig)
@@ -42,7 +58,7 @@ def analyzeLine(line):
 	if line.rfind(' 200 ') != -1:
 		strArr = re.split('[ \?]', line)
 		if len(strArr) > 0:
-			return Item(strArr[0], strArr[5][1:], strArr[6], strArr[10])
+			return Item(strArr[-12], strArr[-7], strArr[-6], strArr[-2], strArr[-1])
 
 
 class Item:
@@ -63,9 +79,10 @@ class Item:
 
 def printCallMost(countDic):
 	print("根据请求次数打印请求")
-	sortedDics = sorted(countDic.items(), key=lambda item:item[1], reverse=True)
-	for item in sortedDics :
-		print("%s, %d" % (item[0], item[1]))
+	sortedDics = sorted(countDic.items(), key=lambda item: item[1], reverse=True)
+	for item in sortedDics:
+		if item[1] > callThreshold:
+			print("%s, %d" % (item[0], item[1]))
 
 
 def printTimeOut(timeout):
@@ -81,4 +98,4 @@ def printResToBig(resToBig):
 
 
 if __name__ == '__main__':
-	analyzeHttpLog(['/Users/xiuc/Documents/management/search/log_analyze/search_goods_access.log'])
+	analyzeHttpLog([''])
