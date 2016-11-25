@@ -9,6 +9,8 @@ import os.path
 
 """
 对日志从请求响应时间,响应结果大小,请求次数进行分析
+日志格式:
+'10.122.66.103 10.161.236.98 - - [24/Nov/2016:01:00:01 +0800] "GET /elasticsearch/crm/customer?param=JnVzZXJJZFNhbGVzPV5udWxsJm9yZ0lkU2FsZXM9MTM1MCwxMzA5Jm93bmVySWQ9MCZzaG9wVHlwZT0xJnN0YXJ0PTMwJnJvd3M9MTA%3D&sign=44f5e644d15fde68c9e68791ed287267 HTTP/1.0" 200 3813 22'
 """
 
 # 请求响应时间阈值
