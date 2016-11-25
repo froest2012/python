@@ -1,7 +1,6 @@
 #! /usr/bin/env python2
 # -*- coding:utf-8 -*-
 
-import hashlib
 import re
 import traceback
 import os
@@ -73,18 +72,15 @@ class Item:
 		self.method = method
 		self.iname = iname
 		self.res = res
-		hashId = hashlib.sha256()
-		hashId.update(repr(iname).encode('utf-8'))
-		self.hash = hashId.hexdigest()
 		self.time = time
 
 
 def printCallMost(countDic):
 	print("根据请求次数打印请求")
 	sortedDics = sorted(countDic.items(), key=lambda item: item[1], reverse=True)
-	for item in sortedDics:
-		if item[1] > callThreshold:
-			print("%s, %d" % (item[0], item[1]))
+	for it in sortedDics:
+		if it[1] > callThreshold:
+			print("%s, %d" % (it[0], it[1]))
 
 
 def printTimeOut(timeout):
